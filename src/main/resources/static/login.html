@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+</head>
+<body>
+<h1>登陆</h1>
+<div>
+    <form action="/doLogin" id="logform" method="post">
+        <input name="username" placeholder="用户名：" type="text">
+        <br>
+        <input name="password" placeholder="密码：" type="password">
+        <br>
+        <div>
+            <input class="form-control" name="verifyCode" placeholder="验证码" required="required" type="text">
+            <img onclick="refresh(this)" onmouseover="mouseover(this)" src="getVerifyCode" title="看不清，请点我"/>
+        </div>
+        <br>
+        <div>
+            <label><input name="remember-me" type="checkbox"/>自动登录</label>
+            <input type="submit">立即登陆</input>
+        </div>
+    </form>
+    <!--  /sms/login 是配置在 SmsAuthenticationFilter 中的 Url。-->
+    <form action="/sms/login" method="post">
+        <div>
+            手机号：<input id="mobile" name="mobile" type="text" value="1111">
+        </div>
+        <div>
+            验证码：<input name="smsCode" type="text">
+            <a href="javascript:;" onclick="sendSms()">获取验证码</a>
+        </div>
+        <div>
+            <button type="submit">立即登陆</button>
+        </div>
+    </form>
+    <script>
+        function refresh(obj) {
+            obj.src = "getVerifyCode?" + Math.random();
+        }
+
+        function mouseover(obj) {
+            obj.style.cursor = "pointer";
+        }
+
+        function sendSms() {
+            window.location.href = '/sms/code?mobile=' + document.getElementById("mobile").value;
+        }
+    </script>
+</div>
+</body>
+</html>
